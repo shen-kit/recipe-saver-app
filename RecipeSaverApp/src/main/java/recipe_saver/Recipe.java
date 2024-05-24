@@ -5,9 +5,13 @@ import java.util.List;
 public class Recipe {
 
   private final List<Ingredient> ingredients;
+  private final int duration;
+  private final List<RecipeStep> instructions;
 
-  public Recipe(List<Ingredient> ingredients) {
+  public Recipe(List<Ingredient> ingredients, int duration, List<RecipeStep> instructions) {
     this.ingredients = ingredients;
+    this.duration = duration;
+    this.instructions = instructions;
   }
 
   public List<Ingredient> getIngredients() {
@@ -16,10 +20,19 @@ public class Recipe {
 
   @Override
   public String toString() {
-    StringBuilder ingredientsStr = new StringBuilder();
+    StringBuilder recipeStr = new StringBuilder();
+    // duration
+    recipeStr.append("Duration: ").append(duration).append(" mins\n\n");
+
+    // ingredients
     for (Ingredient ingredient : ingredients) {
-      ingredientsStr.append(String.format("%20s   %-40s note: %s\n", ingredient.getQuantity(), ingredient.getName(), ingredient.getNotes()));
+      recipeStr.append(String.format("%20s   %-40s", ingredient.getQuantity(), ingredient.getName()));
+      if (!ingredient.getNotes().isEmpty()) {
+        recipeStr.append(" note: ").append(ingredient.getNotes());
+      }
+      recipeStr.append("\n");
     }
-    return ingredientsStr.toString();
+
+    return recipeStr.toString();
   }
 }
